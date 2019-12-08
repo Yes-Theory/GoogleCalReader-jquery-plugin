@@ -11,7 +11,8 @@
         errorMsg: 'No events in calendar',
         maxEvents: 50,
         futureEventsOnly: true,
-        sortDescending: true
+        sortDescending: true,
+        renderFunc: undefined
       },
       options);
 
@@ -37,16 +38,21 @@
           var summary = item.summary || '';
 					var description = item.description;
 					var location = item.location;
-					var eventDate = formatDate(eventdate, defaults.dateFormat.trim());
-					s ='<div class="eventtitle">'+ summary +'</div>';
-					s +='<div class="eventdate"> When: '+ eventDate +'</div>';
-					if(location) {
-						s +='<div class="location">Where: '+ location +'</div>';
-					}
-					if(description) {
-						s +='<div class="description">'+ description +'</div>';
-					}
-					$($div).append('<li>' + s + '</li>');
+          var eventDate = formatDate(eventdate, defaults.dateFormat.trim());
+          
+          if(defaults.renderFunc == undefined){
+            s ='<div class="eventtitle">'+ summary +'</div>';
+            s +='<div class="eventdate"> When: '+ eventDate +'</div>';
+            if(location) {
+              s +='<div class="location">Where: '+ location +'</div>';
+            }
+            if(description) {
+              s +='<div class="description">'+ description +'</div>';
+            }
+            $($div).append('<li>' + s + '</li>');
+          }else{
+            defaults.renderFunc(eventdate, summary, description, location);
+          }
         });
       },
       error: function(xhr, status) {
