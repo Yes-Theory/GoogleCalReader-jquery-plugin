@@ -51,7 +51,7 @@
             }
             $($div).append('<li>' + s + '</li>');
           }else{
-            defaults.renderFunc(eventdate, summary, description, location);
+            $($div).append(defaults.renderFunc(eventdate, summary, description, location));
           }
         });
       },

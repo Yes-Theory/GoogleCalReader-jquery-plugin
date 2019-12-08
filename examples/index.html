@@ -10,21 +10,32 @@
     </style>
 </head>
 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="../index.js" type="text/javascript"></script>
 
 <script type="text/javascript">
    jQuery(function ($) {
+      const dateOptions = {year: 'numeric', month: 'long', day: 'numeric' };
        $('#eventlist').gCalReader({
-         calendarId:'en.usa#holiday@group.v.calendar.google.com',
-         apiKey:'AIzaSyAVhU0GdCZQidylxz7whIln82rWtZ4cIDQ',
-         sortDescending: false
+          calendarId:'5q39jegrgtpio1l43lkhf6vnfk@group.calendar.google.com',
+          apiKey:'AIzaSyDNc-mzVL4eCvrRS-csFnJQbebcIJ1mZkQ',
+          sortDescending: false,
+          renderFunc: (eventdate, summary, description, location)=>{
+            console.log('load render callback');
+            var eventHtml = '<div>';
+            eventHtml += '<h2>' + summary + '</h2>';
+            eventHtml += "<span class='location'>" + location + '</span>';
+            eventHtml += "<span class='date'>" + new Date(eventdate).toLocaleDateString(undefined, dateOptions) + '</span>';
+            eventHtml += '<p>' + description + '</p>';
+            eventHtml += '</div>';
+            return eventHtml;
+         }
         });
 	 });
 </script>
 <body>
   <h1>Upcoming Holidays (demo) </h1>
-<ul id="eventlist">
-</ul>
+<div id="eventlist">
+</div>
 </body>
 </html>
